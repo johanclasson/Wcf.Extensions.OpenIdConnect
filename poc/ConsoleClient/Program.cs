@@ -32,7 +32,7 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleClient
 
             // Helper channel factory
             var channel = WrappedJwtChannelFactory
-                .Create<IService>(token, "https://localhost:44335/do-stuff");
+                .Create<IService>(token, "https://localhost:44339/do-stuff");
             //.Create<IService>(token, "https://localhost:44332/service.svc");
 
             Console.Write("Client Credential Ping ");

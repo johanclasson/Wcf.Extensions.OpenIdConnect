@@ -14,7 +14,7 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleHost
         {
             var host = new ServiceHost(
                 typeof(Service), 
-                new Uri("https://localhost:44335"));
+                new Uri("https://localhost:44339"));
 
             // Init option 1: Call extension method directly
             //var config = OpenIdConnectConfigurationClient.RequestConfigurationAsync(
