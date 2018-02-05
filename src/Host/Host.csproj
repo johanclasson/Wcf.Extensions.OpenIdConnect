@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationConfigurationException.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="IHttpClient.cs" />

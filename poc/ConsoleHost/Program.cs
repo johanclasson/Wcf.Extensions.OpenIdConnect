@@ -69,5 +69,4 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleHost
             return sb.ToString().Trim();
         }
     }
-
 }

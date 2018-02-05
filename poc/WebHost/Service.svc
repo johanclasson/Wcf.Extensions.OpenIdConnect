@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Wcf.Extensions.OpenIdConnect.Poc.WebHost.Service" CodeBehind="Service.svc.cs" %>

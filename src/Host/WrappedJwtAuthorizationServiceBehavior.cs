@@ -53,10 +53,18 @@ namespace Wcf.Extensions.OpenIdConnect.Host
         }
 
         // TODO: Move app setting stuff to attribute only!?
-        private string GetValidAudience() => ConfigurationManager.AppSettings[ValidAudienceAppSettingKey];
+        private string GetValidAudience() => GetAppSetting(ValidAudienceAppSettingKey);
 
         // TODO: Move app setting stuff to attribute only!?
-        private string GetMetadataAddress() => ConfigurationManager.AppSettings[MetadataAddressKey];
+        private string GetMetadataAddress() => GetAppSetting(MetadataAddressKey);
+
+        private string GetAppSetting(string key)
+        {
+            string value = ConfigurationManager.AppSettings[key];
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ApplicationConfigurationException(key);
+            return value;
+        }
 
         private OpenIdConnectConfiguration GetConfig()
         {
