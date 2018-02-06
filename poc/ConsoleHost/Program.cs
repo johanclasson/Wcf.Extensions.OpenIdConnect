@@ -24,7 +24,7 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleHost
             // Init option 2: Add behavior by code or web.config
             //host.Description.Behaviors.Add(new WrappedJwtAuthorizationServiceBehavior(requiredScopes: "write"));
 
-            host.AddServiceEndpoint(typeof(IService), CreateBinding(), "do-stuff");
+            host.AddServiceEndpoint(typeof(IService), CreateBinding(), "do-stuff.svc");
 
             host.Open();
 

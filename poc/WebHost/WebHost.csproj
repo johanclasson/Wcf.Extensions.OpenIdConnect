@@ -13,7 +13,7 @@
     <RootNamespace>Wcf.Extensions.OpenIdConnect.Poc.WebHost</RootNamespace>
     <AssemblyName>WebHost</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44332</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
@@ -72,14 +72,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Service.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service.svc.cs">
-      <DependentUpon>Service.svc</DependentUpon>
-    </Compile>
+    <Compile Include="Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Host\Host.csproj">
