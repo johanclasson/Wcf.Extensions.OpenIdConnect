@@ -6,7 +6,7 @@ using Wcf.Extensions.OpenIdConnect.Host;
 namespace Wcf.Extensions.OpenIdConnect.Poc.WebHost
 {
     [WrappedJwtAuthorizationServiceBehavior(requiredScopes: "write")]
-    [ServiceBehavior(AddressFilterMode = AddressFilterMode.Any)]
+    //[ServiceBehavior(AddressFilterMode = AddressFilterMode.Any)]
     public class Service : IService
     {
         public string Ping()
