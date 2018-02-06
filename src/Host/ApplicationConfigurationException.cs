@@ -4,12 +4,12 @@ namespace Wcf.Extensions.OpenIdConnect.Host
 {
     public class ApplicationConfigurationException : Exception
     {
-        public string Name { get; }
+        public string AppSettingKey { get; }
 
-        public ApplicationConfigurationException(string name)
-            : base($"The application setting {name} is not set or empty.")
+        public ApplicationConfigurationException(string appSettingKey)
+            : base($"The application setting {appSettingKey} is not set or empty.")
         {
-            Name = name;
+            AppSettingKey = appSettingKey;
         }
     }
 }

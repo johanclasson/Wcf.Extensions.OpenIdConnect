@@ -1,11 +1,10 @@
 ﻿using System.Security.Claims;
 using System.ServiceModel;
 using System.Text;
-using Wcf.Extensions.OpenIdConnect.Host;
 
 namespace Wcf.Extensions.OpenIdConnect.Poc.WebHost
 {
-    [WrappedJwtAuthorizationServiceBehavior(requiredScopes: "write")]
+    // ReSharper disable once UnusedMember.Global - Created through Service Host Factory
     public class Service : IService
     {
         public string Ping()

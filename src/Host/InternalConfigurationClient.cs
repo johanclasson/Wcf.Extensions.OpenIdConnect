@@ -10,7 +10,8 @@ namespace Wcf.Extensions.OpenIdConnect.Host
         {
             using (var client = createClient())
             {
-                dynamic openidConfiguration = JObject.Parse(await client.GetStringAsync(metadataAddress));
+                var json = await client.GetStringAsync(metadataAddress);
+                dynamic openidConfiguration = JObject.Parse(json);
                 string jwksUri = openidConfiguration.jwks_uri;
                 dynamic jwks = JObject.Parse(await client.GetStringAsync(jwksUri));
                 string certificate = jwks.keys[0].x5c[0];

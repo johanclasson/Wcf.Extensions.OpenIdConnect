@@ -60,12 +60,14 @@
     <Compile Include="Guard.cs" />
     <Compile Include="IHttpClient.cs" />
     <Compile Include="InternalConfigurationClient.cs" />
+    <Compile Include="InternalWrappedJwtAuthorizationServiceBehavior.cs" />
     <Compile Include="OpenIdConnectConfiguration.cs" />
     <Compile Include="OpenIdConnectConfigurationClient.cs" />
     <Compile Include="OpenIdConnectConfigurationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequireAuthenticationAuthorizationManager.cs" />
     <Compile Include="ServiceHostExtensions.cs" />
+    <Compile Include="WrappedJwtAuthorizationExtensionElement.cs" />
     <Compile Include="WrappedJwtAuthorizationServiceBehavior.cs" />
     <Compile Include="WrappedJwtAuthorizationServiceBehaviorAttribute.cs" />
     <Compile Include="WrappedJwtSecurityTokenHandler.cs" />
