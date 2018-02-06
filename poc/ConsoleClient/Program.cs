@@ -7,7 +7,9 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleClient
 {
     internal static class Program
     {
+        // Uri to ConsoleHost
         //private const string ServiceUri = "https://localhost:44339/do-stuff";
+        // Uri to WebHost
         private const string ServiceUri = "https://localhost:44332/Service.svc";
 
         private static void Main()
