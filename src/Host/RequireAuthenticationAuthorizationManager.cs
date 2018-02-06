@@ -6,7 +6,7 @@ namespace Wcf.Extensions.OpenIdConnect.Host
     {
         public override bool CheckAccess(AuthorizationContext context)
         {
-            return context.Principal.Identity.IsAuthenticated;
+            return context?.Principal?.Identity?.IsAuthenticated ?? false;
         }
     }
 }
