@@ -14,12 +14,16 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleHost
                 new Uri("https://localhost:44339"));
 
             // Init option 1: Call extension method directly
-            //var config = OpenIdConnectConfigurationClient.RequestConfigurationAsync(
-            //    "https://adfs.johan.local/adfs/.well-known/openid-configuration").Result;
-            //host.AddWrappedJwtAuthorization(config, "microsoft:identityserver:273a928b-8f15-461d-a039-0005ba3e8f1d", "write");
+            //var config = OpenIdConnectConfigurationClient.RequestConfigurationAsync(Constants.MetadataAddress).Result;
+            //host.AddWrappedJwtAuthorization(config,
+            //    requiredScopes: Constants.RequiredScopes,
+            //    validAudience: Constants.ValidAudience);
 
             // Init option 2: Add behavior by code
-            //host.Description.Behaviors.Add(new WrappedJwtAuthorizationServiceBehavior(requiredScopes: "write"));
+            //host.Description.Behaviors.Add(new WrappedJwtAuthorizationServiceBehavior(
+            //    requiredScopes: Constants.RequiredScopes,
+            //    validAudience: Constants.ValidAudience,
+            //    metadataAddress: Constants.MetadataAddress));
 
             host.AddServiceEndpoint(typeof(IService), CreateBinding(), "do-stuff.svc");
 

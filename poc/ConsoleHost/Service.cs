@@ -13,7 +13,10 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleHost
     }
 
     // Init option 3: Add behavior by service attribute
-    [WrappedJwtAuthorizationServiceBehavior(requiredScopes: "write")]
+    [WrappedJwtAuthorizationServiceBehavior(
+        requiredScopes: Constants.RequiredScopes,
+        validAudience: Constants.ValidAudience,
+        metadataAddress: Constants.MetadataAddress)]
     internal class Service : IService
     {
         public string Ping()
