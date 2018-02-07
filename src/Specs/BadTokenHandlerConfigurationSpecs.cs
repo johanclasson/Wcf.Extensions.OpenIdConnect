@@ -4,13 +4,12 @@ using Xunit;
 
 namespace Wcf.Extensions.OpenIdConnect.Specs
 {
-    public class BadConfigurationTests
+    public class BadTokenHandlerConfigurationSpecs
     {
         [Theory]
         [InlineData("", "certificate", "validAudience", "requiredScopes", "Issuer")]
         [InlineData("issuer", "", "validAudience", "requiredScopes", "Certificate")]
         [InlineData("issuer", "certificate", "", "requiredScopes", "validAudience")]
-        [InlineData("issuer", "certificate", "validAudience", "", "requiredScopes")]
         public void WithEmptyConfig_ShouldThrow(string issuer, string certificate, string validAudience, string requiredScopes, string propertyName)
         {
             var testCode = CreateAction(issuer, certificate, validAudience, requiredScopes);

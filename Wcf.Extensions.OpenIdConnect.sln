@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHost", "poc\ConsoleH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "poc\ConsoleClient\ConsoleClient.csproj", "{062FDC48-5F08-4E31-B42F-B24C53ADEB9C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHost", "poc\WebHost\WebHost.csproj", "{C9525D0B-F1BC-4E84-867C-79B61A78A270}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{062FDC48-5F08-4E31-B42F-B24C53ADEB9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{062FDC48-5F08-4E31-B42F-B24C53ADEB9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{062FDC48-5F08-4E31-B42F-B24C53ADEB9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9525D0B-F1BC-4E84-867C-79B61A78A270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9525D0B-F1BC-4E84-867C-79B61A78A270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9525D0B-F1BC-4E84-867C-79B61A78A270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9525D0B-F1BC-4E84-867C-79B61A78A270}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{332EDA67-3503-4A26-8898-4ED046965EAF} = {03565362-FB0E-474C-AF89-ECB708D1C9AF}
 		{8A96C8FD-E76A-48D2-AA3E-79BDFA6AD6F0} = {8BAA99D1-1936-47DF-B747-2349C46985D5}
 		{062FDC48-5F08-4E31-B42F-B24C53ADEB9C} = {8BAA99D1-1936-47DF-B747-2349C46985D5}
+		{C9525D0B-F1BC-4E84-867C-79B61A78A270} = {8BAA99D1-1936-47DF-B747-2349C46985D5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D14A005-5B5A-4A42-A931-1D3EB818E4F9}

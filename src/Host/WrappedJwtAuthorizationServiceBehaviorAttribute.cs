@@ -11,12 +11,18 @@ namespace Wcf.Extensions.OpenIdConnect.Host
         private readonly WrappedJwtAuthorizationServiceBehavior _behavior;
 
         public WrappedJwtAuthorizationServiceBehaviorAttribute(
-            string validAudienceAppSettingKey = Constants.DefaultValidAudienceAppSettingKey,
-            string metadataAddressKey = Constants.DefaultMetadataAddressKey,
-            string requiredScopes = "")
+            string validAudience = null,
+            string validAudienceAppSettingKey = null,
+            string metadataAddress = null,
+            string metadataAddressAppSettingsKey = null,
+            string requiredScopes = null)
         {
             _behavior = new WrappedJwtAuthorizationServiceBehavior(
-                validAudienceAppSettingKey, metadataAddressKey, requiredScopes);
+                requiredScopes: requiredScopes,
+                validAudience: validAudience,
+                validAudienceAppSettingKey: validAudienceAppSettingKey,
+                metadataAddress: metadataAddress,
+                metadataAddressAppSettingsKey: metadataAddressAppSettingsKey);
         }
 
         public void Validate(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)

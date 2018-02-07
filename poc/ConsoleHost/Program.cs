@@ -1,10 +1,7 @@
 ﻿using System;
 using System.IdentityModel.Tokens;
-using System.Security.Claims;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using System.Text;
-using Wcf.Extensions.OpenIdConnect.Host;
 
 namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleHost
 {
@@ -14,17 +11,21 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleHost
         {
             var host = new ServiceHost(
                 typeof(Service), 
-                new Uri("https://localhost:44335"));
+                new Uri("https://localhost:44339"));
 
             // Init option 1: Call extension method directly
-            //var config = OpenIdConnectConfigurationClient.RequestConfigurationAsync(
-            //    "https://adfs.johan.local/adfs/.well-known/openid-configuration").Result;
-            //host.AddWrappedJwtAuthorization(config, "microsoft:identityserver:273a928b-8f15-461d-a039-0005ba3e8f1d", "write");
+            //var config = OpenIdConnectConfigurationClient.RequestConfigurationAsync(Constants.MetadataAddress).Result;
+            //host.AddWrappedJwtAuthorization(config,
+            //    requiredScopes: Constants.RequiredScopes,
+            //    validAudience: Constants.ValidAudience);
 
-            // Init option 2: Add behavior by code or web.config
-            //host.Description.Behaviors.Add(new WrappedJwtAuthorizationServiceBehavior(requiredScopes: "write"));
+            // Init option 2: Add behavior by code
+            //host.Description.Behaviors.Add(new WrappedJwtAuthorizationServiceBehavior(
+            //    requiredScopes: Constants.RequiredScopes,
+            //    validAudience: Constants.ValidAudience,
+            //    metadataAddress: Constants.MetadataAddress));
 
-            host.AddServiceEndpoint(typeof(IService), CreateBinding(), "do-stuff");
+            host.AddServiceEndpoint(typeof(IService), CreateBinding(), "do-stuff.svc");
 
             host.Open();
 
@@ -44,30 +45,4 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleHost
             return binding;
         }
     }
-
-    [ServiceContract]
-    public interface IService
-    {
-        [OperationContract]
-        string Ping();
-    }
-
-    // Init option 3: Add behavior by service attribute
-    [WrappedJwtAuthorizationServiceBehavior(requiredScopes: "write")]
-    internal class Service : IService
-    {
-        public string Ping()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine("Pong");
-
-            foreach (var claim in ClaimsPrincipal.Current.Claims)
-            {
-                sb.AppendFormat("{0} :: {1}\n", claim.Type, claim.Value);
-            }
-
-            return sb.ToString().Trim();
-        }
-    }
-
 }

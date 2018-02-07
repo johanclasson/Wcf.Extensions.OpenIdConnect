@@ -21,7 +21,7 @@ namespace Wcf.Extensions.OpenIdConnect.Host
             Guard.AgainstNullOrEmpty(config.Issuer, nameof(config.Issuer));
             Guard.AgainstNullOrEmpty(config.Certificate, nameof(config.Certificate));
             Guard.AgainstNullOrEmpty(validAudience, nameof(validAudience));
-            Guard.AgainstNullOrEmpty(requiredScopes, nameof(requiredScopes));
+            Guard.AgainstNull(requiredScopes, nameof(requiredScopes));
 
             JwtSecurityTokenHandler.InboundClaimTypeMap = new Dictionary<string, string>();
 

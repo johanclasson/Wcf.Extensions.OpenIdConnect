@@ -13,12 +13,12 @@ namespace Wcf.Extensions.OpenIdConnect.Specs
         {
             _fixture = new ConfigurationFixture();
             _fixture.GivenMetadataAddress("https://adfs.johan.local/adfs/.well-known/openid-configuration");
-            _fixture.GivenHttpResponse("https://adfs.johan.local/adfs/discovery/keys", TestConstants.ConfigurationKeys);
+            _fixture.GivenHttpResponse("https://adfs.johan.local/adfs/discovery/keys", SpecConstants.ConfigurationKeys);
         }
 
         [Theory]
-        [InlineData(TestConstants.ConfigurationWithAccessTokenIssuer, "http://ADFS.johan.local/adfs/services/trust")]
-        [InlineData(TestConstants.ConfigurationWithoutAccessTokenIssuer, "https://ADFS.johan.local/adfs")]
+        [InlineData(SpecConstants.ConfigurationWithAccessTokenIssuer, "http://ADFS.johan.local/adfs/services/trust")]
+        [InlineData(SpecConstants.ConfigurationWithoutAccessTokenIssuer, "https://ADFS.johan.local/adfs")]
         public async Task RequestedConfig_ShouldPickAccessTokenIssuerOverIssuer_ShouldGetCertificate(string configuration, string expectedIssuer)
         {
             _fixture.GivenHttpResponse("https://adfs.johan.local/adfs/.well-known/openid-configuration", configuration);

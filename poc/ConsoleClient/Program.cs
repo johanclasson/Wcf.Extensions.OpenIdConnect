@@ -7,6 +7,11 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleClient
 {
     internal static class Program
     {
+        // Uri to ConsoleHost
+        //private const string ServiceUri = "https://localhost:44339/do-stuff.svc";
+        // Uri to WebHost
+        private const string ServiceUri = "https://localhost:44332/do-stuff.svc";
+
         private static void Main()
         {
             var client = new WrappedJwtTokenClient(
@@ -32,7 +37,7 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleClient
 
             // Helper channel factory
             var channel = WrappedJwtChannelFactory
-                .Create<IService>(token, "https://localhost:44335/do-stuff");
+                .Create<IService>(token, ServiceUri);
 
             Console.Write("Client Credential Ping ");
             Console.WriteLine(channel.Ping());
@@ -45,7 +50,7 @@ namespace Wcf.Extensions.OpenIdConnect.Poc.ConsoleClient
 
             var factory = new ChannelFactory<IService>(
                 BindingFactory.ForClaims,
-                new EndpointAddress("https://localhost:44335/do-stuff"));
+                new EndpointAddress(ServiceUri));
             var channel = factory.CreateChannelWithIssuedToken(token);
 
             Console.Write("Resource Owner Ping ");
