@@ -1,4 +1,5 @@
 redirects: on
+strategy: min
 source https://api.nuget.org/v3/index.json
 framework >= net45
 
