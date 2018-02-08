@@ -1,0 +1,10 @@
+type project
+authors Johan Classon
+description
+    Adds capability for consuming WCF-services that authenticate through JWT-tokens.
+projectUrl
+    https://github.com/johanclasson/Wcf.Extensions.OpenIdConnect
+licenseUrl
+    https://github.com/johanclasson/Wcf.Extensions.OpenIdConnect/blob/master/LICENSE
+tags
+    WCF,OpenIdConnect,OAuth2.0

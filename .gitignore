@@ -257,7 +257,8 @@ typings/
 _Pvt_Extensions
 
 # Paket dependency manager
-.paket/paket.exe
+.paket
+!.paket/paket.exe
 paket-files/
 
 # FAKE - F# Make
@@ -275,8 +276,8 @@ __pycache__/
 *.pyc
 
 # Cake - Uncomment if you are using it
-# tools/**
-# !tools/packages.config
+tools/**
+!tools/packages.config
 
 # Telerik's JustMock configuration file
 *.jmconfig
@@ -286,3 +287,5 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+out
