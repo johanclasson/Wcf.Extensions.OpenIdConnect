@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Wcf.Extensions.OpenIdConnect.Host</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Johan Classon</authors>
+    <owners>Johan Classon</owners>
+    <licenseUrl>https://github.com/johanclasson/Wcf.Extensions.OpenIdConnect/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/johanclasson/Wcf.Extensions.OpenIdConnect</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <tags>WCF OpenIdConnect OAuth2.0</tags>
+  </metadata>
+</package>
