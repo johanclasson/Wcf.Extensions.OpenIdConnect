@@ -1,5 +1,5 @@
 #tool "nuget:?package=xunit.runner.console"
-#addin "Cake.ExtendedNuGet"
+#load ./paket.cake
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -15,8 +15,7 @@ var configuration = Argument("configuration", "Release");
 // Define directories.
 var clientBuildDir = Directory("./src/Client/bin") + Directory(configuration);
 var hostBuildDir = Directory("./src/Host/bin") + Directory(configuration);
-var slnFile = File("./Wcf.Extensions.OpenIdConnect.sln");
-var outputDir = Directory("./build");
+var outputDir = Directory("./out");
 string version = "";
 
 //////////////////////////////////////////////////////////////////////
@@ -28,12 +27,13 @@ Task("Clean")
 {
     CleanDirectory(clientBuildDir);
     CleanDirectory(hostBuildDir);
+    CleanDirectory(outputDir);
 });
 
-Task("Restore-NuGet-Packages")
+Task("Packet Restore")
     .Does(() =>
 {
-    NuGetRestore(slnFile);
+    PacketRestore();
 });
 
 Task("UpdateAssemblyInfo")
@@ -48,22 +48,31 @@ Task("UpdateAssemblyInfo")
 
 Task("Build")
     .IsDependentOn("Clean")
-    .IsDependentOn("Restore-NuGet-Packages")
+    .IsDependentOn("Packet Restore")
     .IsDependentOn("UpdateAssemblyInfo")
     .Does(() =>
 {
-      MSBuild(slnFile, settings =>
+      MSBuild("./Wcf.Extensions.OpenIdConnect.sln", settings =>
         settings
         .SetConfiguration(configuration)
         .SetVerbosity(Verbosity.Minimal));
 });
 
-Task("Run-Unit-Tests")
+Task("Undo AssemblyInfo.cs")
+    .IsDependentOn("Build")
+    .Does(() =>
+{
+    var command = "gci . -Recurse -Filter 'AssemblyInfo.cs' | %{ git checkout $_.FullName }";
+    RunPowerShellCommand(command);
+});
+
+Task("Run Unit Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
     XUnit2("./src/**/bin/" + configuration + "/*.Specs.dll",
-        new XUnit2Settings {
+        new XUnit2Settings
+        {
             Parallelism = ParallelismOption.All,
             HtmlReport = true,
             NoAppDomain = true,
@@ -71,12 +80,25 @@ Task("Run-Unit-Tests")
         });
 });
 
+Task("Packet Pack")
+    .IsDependentOn("Build")
+    .Does(() =>
+{
+    PacketPack(new PacketPackSettings {
+        OutputDirectory = outputDir.ToString(),
+        Configuration = configuration,
+        Version = version
+    });
+});
+
 //////////////////////////////////////////////////////////////////////
 // TASK TARGETS
 //////////////////////////////////////////////////////////////////////
 
 Task("Default")
-    .IsDependentOn("Run-Unit-Tests");
+    .IsDependentOn("Run Unit Tests")
+    .IsDependentOn("Undo AssemblyInfo.cs")
+    .IsDependentOn("Packet Pack");
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
