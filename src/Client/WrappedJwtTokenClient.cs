@@ -26,7 +26,6 @@ namespace Wcf.Extensions.OpenIdConnect.Client
             }
         }
 
-        //TODO: Does this even work? Will the user profile claims be returned?
         public async Task<SecurityToken> RequestResourceOwnerPasswordAsync(
             string userName, string password, string scope = "openid profile")
         {
