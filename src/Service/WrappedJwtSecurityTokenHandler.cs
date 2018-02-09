@@ -58,28 +58,19 @@ namespace Wcf.Extensions.OpenIdConnect.Service
 
         private void ThrowIfInvalidScope(ClaimsPrincipal principal)
         {
-            if (_requiredScopes.Any())
+            if (!_requiredScopes.Any())
+                return;
+            foreach (var scope in _requiredScopes)
             {
-                bool found = false;
-
-                foreach (var scope in _requiredScopes)
-                {
-                    if (principal.HasClaim(c =>
-                    {
-                        return c.Type == "scp" &&
-                               c.Value.Split(' ').Any(s => s == scope);
-                    }))
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (found == false)
-                {
-                    throw new SecurityTokenValidationException("Insufficient Scope");
-                }
+                if (principal.HasClaim(c => IsClaimContainingExpectedScope(c, scope)))
+                    return;
             }
+            throw new SecurityTokenValidationException("Insufficient Scope");
+        }
+
+        private static bool IsClaimContainingExpectedScope(Claim c, string scope)
+        {
+            return c.Type == "scp" && c.Value.Split(' ').Any(s => s == scope);
         }
     }
 }

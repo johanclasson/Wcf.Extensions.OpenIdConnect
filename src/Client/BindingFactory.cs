@@ -14,6 +14,7 @@ namespace Wcf.Extensions.OpenIdConnect.Client
             var securityMode = WSFederationHttpSecurityMode.TransportWithMessageCredential;
             var binding = new WS2007FederationHttpBinding(securityMode)
             {
+                //TODO: Is this really needed
                 HostNameComparisonMode = HostNameComparisonMode.Exact
             };
             binding.Security.Message.EstablishSecurityContext = false;

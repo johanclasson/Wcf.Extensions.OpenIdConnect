@@ -35,6 +35,7 @@ namespace Wcf.Extensions.OpenIdConnect.Samples.ConsoleService
             host.Close();
         }
 
+        // TODO: Use BindingFactory.ForClaims
         private static Binding CreateBinding()
         {
             var binding = new WS2007FederationHttpBinding(WSFederationHttpSecurityMode.TransportWithMessageCredential);
