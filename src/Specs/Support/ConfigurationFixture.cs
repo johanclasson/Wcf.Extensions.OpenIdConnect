@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Wcf.Extensions.OpenIdConnect.Host;
+using Wcf.Extensions.OpenIdConnect.Service;
 
 namespace Wcf.Extensions.OpenIdConnect.Specs.Support
 {
