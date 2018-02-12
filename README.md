@@ -18,7 +18,7 @@ Install-Package Wcf.Extensions.OpenIdConnect.Client
 
 ```
 // Request token
-var client = new WrappedJwtTokenClient(
+var client = new WrappedJwtClient(
     clientId: "my-client-id",
     clientSecret: "my-client-secret",
     address: "https://{my-authorization-server}/oauth2/token");
@@ -28,9 +28,9 @@ var channel = WrappedJwtChannelFactory.Create<IMyService>(token, "https://{some-
 channel.MyMethod();
 ```
 
-The `WrappedJwtTokenClient` use the standard `IdentityModel.Client.TokenClient` to request JWT tokens, but wraps them in a SAML assertion. For wrapping JWT tokens manually, use the static `SamlUtils.WrapJwt("...")` helper method.
+The `WrappedJwtClient` use the standard `IdentityModel.Client.TokenClient` to request JWT tokens, but wraps them in a SAML assertion. For wrapping JWT tokens manually, use the static `SamlUtils.WrapJwt("...")` helper method.
 
-For requesting a JWT token over Resource Owner Credential Grant, use the `RequestResourceOwnerPasswordAsync(...)` method of the `WrappedJwtTokenClient`.
+For requesting a JWT token over Resource Owner Credential Grant, use the `RequestResourceOwnerPasswordAsync(...)` method of the `WrappedJwtClient`.
 
 ## Service Host
 
@@ -149,12 +149,6 @@ var binding = new WS2007FederationHttpBinding(
     WSFederationHttpSecurityMode.TransportWithMessageCredential);
 binding.Security.Message.EstablishSecurityContext = false;
 binding.Security.Message.IssuedKeyType = SecurityKeyType.BearerKey;
-```
-
-Or with the following static property, provided for convenience:
-
-```
-var binding = BindingFactory.ForClaims;
 ```
 
 Or with App.Config or Web.Config:

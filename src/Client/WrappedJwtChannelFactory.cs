@@ -8,7 +8,7 @@ namespace Wcf.Extensions.OpenIdConnect.Client
         public static TChannel Create<TChannel>(SecurityToken issuedToken, string uri)
         {
             var factory = new ChannelFactory<TChannel>(
-                BindingFactory.ForClaims,
+                BindingFactory.ForWrappedJwt,
                 new EndpointAddress(uri));
             return factory.CreateChannelWithIssuedToken(issuedToken);
         }
