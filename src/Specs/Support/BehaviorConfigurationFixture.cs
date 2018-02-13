@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Wcf.Extensions.OpenIdConnect.Host;
+using Wcf.Extensions.OpenIdConnect.Service;
 using Xunit;
 
 namespace Wcf.Extensions.OpenIdConnect.Specs.Support

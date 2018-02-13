@@ -26,9 +26,12 @@ string version = "";
 Task("Clean")
     .Does(() =>
 {
-    CleanDirectory(clientBuildDir);
-    CleanDirectory(hostBuildDir);
-    CleanDirectory(outputDir);
+    CleanDirectories(new string[]
+    {
+        clientBuildDir,
+        hostBuildDir,
+        outputDir
+    });
 });
 
 Task("Packet Restore")
@@ -40,7 +43,8 @@ Task("Packet Restore")
 Task("UpdateAssemblyInfo")
     .Does(() =>
 {
-    var result = GitVersion(new GitVersionSettings {
+    var result = GitVersion(new GitVersionSettings
+    {
         UpdateAssemblyInfo = true
     });
     version = result.LegacySemVerPadded;
@@ -53,10 +57,10 @@ Task("Build")
     .IsDependentOn("UpdateAssemblyInfo")
     .Does(() =>
 {
-      MSBuild("./Wcf.Extensions.OpenIdConnect.sln", settings =>
+    MSBuild("./Wcf.Extensions.OpenIdConnect.sln", settings =>
         settings
-        .SetConfiguration(configuration)
-        .SetVerbosity(Verbosity.Minimal));
+            .SetConfiguration(configuration)
+            .SetVerbosity(Verbosity.Minimal));
 });
 
 Task("Undo AssemblyInfo.cs")
@@ -85,7 +89,8 @@ Task("Packet Pack")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    PacketPack(new PacketPackSettings {
+    PacketPack(new PacketPackSettings
+    {
         OutputDirectory = outputDir.ToString(),
         Configuration = configuration,
         Version = version

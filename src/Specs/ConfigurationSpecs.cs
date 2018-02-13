@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Wcf.Extensions.OpenIdConnect.Host;
+using Wcf.Extensions.OpenIdConnect.Service;
 using Wcf.Extensions.OpenIdConnect.Specs.Support;
 using Xunit;
 

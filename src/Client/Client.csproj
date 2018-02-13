@@ -47,7 +47,7 @@
     <Compile Include="SamlUtils.cs" />
     <Compile Include="TokenResponseErrorException.cs" />
     <Compile Include="WrappedJwtChannelFactory.cs" />
-    <Compile Include="WrappedJwtTokenClient.cs" />
+    <Compile Include="WrappedJwtClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />

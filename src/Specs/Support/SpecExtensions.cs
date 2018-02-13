@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
-using Wcf.Extensions.OpenIdConnect.Host;
+using Wcf.Extensions.OpenIdConnect.Service;
 
 namespace Wcf.Extensions.OpenIdConnect.Specs.Support
 {
