@@ -29,6 +29,8 @@ namespace Wcf.Extensions.OpenIdConnect.Samples.ConsoleClient
             Console.Write("Resource Owner Ping ");
             Console.WriteLine(InvokeWithResourceOwnerPassword());
 
+            Console.WriteLine();
+            Console.WriteLine("Done.");
             Console.ReadLine();
         }
 
@@ -36,7 +38,7 @@ namespace Wcf.Extensions.OpenIdConnect.Samples.ConsoleClient
         {
             // Request token
             var client = new WrappedJwtClient(TokenUri, ClientId, ClientSecret);
-            SecurityToken token = client.RequestClientCredentialsAsync(scope: "openid write").Result;
+            SecurityToken token = client.RequestClientCredentialsAsync(scope: "write").Result;
             // Create channel - With helper channel factory
             var channel = WrappedJwtChannelFactory.Create<IService>(token, ServiceUri);
             // Invoke proxy
@@ -48,7 +50,7 @@ namespace Wcf.Extensions.OpenIdConnect.Samples.ConsoleClient
             // Request token
             var client = new WrappedJwtClient(TokenUri, ClientId, ClientSecret);
             SecurityToken token = client.RequestResourceOwnerPasswordAsync(
-                scope: "openid profile write", userName: "johan@johan.local", password: "!QAZ2wsx3edc").Result;
+                scope: "write", userName: "johan@johan.local", password: "!QAZ2wsx3edc").Result;
             // Create channel
             var factory = new ChannelFactory<IService>(
                 BindingFactory.ForWrappedJwt,

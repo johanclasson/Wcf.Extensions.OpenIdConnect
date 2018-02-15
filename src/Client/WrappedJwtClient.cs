@@ -36,7 +36,7 @@ namespace Wcf.Extensions.OpenIdConnect.Client
                 innerHttpMessageHandler, (IdentityModel.Client.AuthenticationStyle)style);
         }
 
-        public async Task<SecurityToken> RequestClientCredentialsAsync(string scope = "openid")
+        public async Task<SecurityToken> RequestClientCredentialsAsync(string scope = "")
         {
             using (var oauth2Client = _createClient())
             {
@@ -46,7 +46,7 @@ namespace Wcf.Extensions.OpenIdConnect.Client
         }
 
         public async Task<SecurityToken> RequestResourceOwnerPasswordAsync(
-            string userName, string password, string scope = "openid profile")
+            string userName, string password, string scope = "")
         {
             using (var oauth2Client = _createClient())
             {
