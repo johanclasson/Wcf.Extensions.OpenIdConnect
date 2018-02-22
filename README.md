@@ -11,7 +11,7 @@ Copy your favorite way of configurating the client and service from one of the p
 ### Install NuGet-packages
 
 ```powershell
-Install-Package Wcf.Extensions.OpenIdConnect.Client
+Install-Package Wcf.Extensions.OpenIdConnect.Client -Prerelease
 ```
 
 ### Make Service Call
@@ -52,7 +52,7 @@ string jwt = token.AccessToken;
 ### Install NuGet-packages
 
 ```powershell
-Install-Package Wcf.Extensions.OpenIdConnect.Service
+Install-Package Wcf.Extensions.OpenIdConnect.Service -Prerelease
 ```
 
 ### Configure Authorization
