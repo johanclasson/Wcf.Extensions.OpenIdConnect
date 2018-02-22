@@ -13,6 +13,7 @@ namespace Wcf.Extensions.OpenIdConnect.Service
         private readonly string _validAudience;
         private readonly string _metadataAddress;
         private readonly string _requiredScopes;
+        private readonly string _requiredRoles;
 
         public InternalWrappedJwtAuthorizationServiceBehavior(
             Func<string, OpenIdConnectConfiguration> getConfig,
@@ -21,7 +22,8 @@ namespace Wcf.Extensions.OpenIdConnect.Service
             string validAudienceAppSettingKey = null,
             string metadataAddress = null,
             string metadataAddressAppSettingsKey = null,
-            string requiredScopes = null)
+            string requiredScopes = null,
+            string requiredRoles = null)
         {
             GetConfig = getConfig;
             GetSetting = getSetting;
@@ -30,6 +32,7 @@ namespace Wcf.Extensions.OpenIdConnect.Service
             _metadataAddress = GetOrDefaultFromSettings(
                 metadataAddress, metadataAddressAppSettingsKey, Constants.DefaultMetadataAddressAppSettingsKey);
             _requiredScopes = GetOrDefault(requiredScopes, "");
+            _requiredRoles = GetOrDefault(requiredRoles, "");
         }
 
         private string GetOrDefault(string value, string defaultValue)
@@ -69,7 +72,7 @@ namespace Wcf.Extensions.OpenIdConnect.Service
         private void Init(ServiceHostBase serviceHostBase)
         {
             OpenIdConnectConfiguration config = GetConfig(_metadataAddress);
-            serviceHostBase.AddWrappedJwtAuthorization(config, _validAudience, _requiredScopes);
+            serviceHostBase.AddWrappedJwtAuthorization(config, _validAudience, _requiredScopes, _requiredRoles);
         }
     }
 }

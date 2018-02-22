@@ -17,7 +17,8 @@ namespace Wcf.Extensions.OpenIdConnect.Service
             string validAudienceAppSettingKey = null,
             string metadataAddress = null,
             string metadataAddressAppSettingsKey = null,
-            string requiredScopes = null)
+            string requiredScopes = null,
+            string requiredRoles = null)
         {
             _behavior = new InternalWrappedJwtAuthorizationServiceBehavior(
                 validAudience: validAudience,
@@ -25,6 +26,7 @@ namespace Wcf.Extensions.OpenIdConnect.Service
                 metadataAddress: metadataAddress,
                 metadataAddressAppSettingsKey: metadataAddressAppSettingsKey,
                 requiredScopes: requiredScopes,
+                requiredRoles: requiredRoles,
                 getConfig: GetConfig,
                 getSetting: GetSetting);
         }

@@ -11,6 +11,7 @@ namespace Wcf.Extensions.OpenIdConnect.Service
         private const string MetadataAddressName = "metadataAddress";
         private const string MetadataAddressAppSettingKeyName = "metadataAddressAppSettingKey";
         private const string RequiredScopesName = "requiredScopes";
+        private const string RequiredRolesName = "requiredRoles";
 
         [ConfigurationProperty(ValidAudienceName)]
         private string ValidAudience => GetPropertyValue(ValidAudienceName);
@@ -27,6 +28,9 @@ namespace Wcf.Extensions.OpenIdConnect.Service
         [ConfigurationProperty(RequiredScopesName)]
         private string RequiredScopes => GetPropertyValue(RequiredScopesName);
 
+        [ConfigurationProperty(RequiredRolesName)]
+        private string RequiredRoles => GetPropertyValue(RequiredRolesName);
+
         private string GetPropertyValue(string name)
         {
             var value = (string) base[name];
@@ -39,6 +43,7 @@ namespace Wcf.Extensions.OpenIdConnect.Service
         {
             return new WrappedJwtAuthorizationServiceBehavior(
                 requiredScopes: RequiredScopes,
+                requiredRoles: RequiredRoles,
                 validAudience: ValidAudience,
                 validAudienceAppSettingKey: ValidAudienceAppSettingKey,
                 metadataAddress: MetadataAddress,

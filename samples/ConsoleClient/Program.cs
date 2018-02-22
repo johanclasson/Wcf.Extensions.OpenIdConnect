@@ -1,6 +1,6 @@
-﻿using System;
-using System.IdentityModel.Tokens;
+using System;
 using System.ServiceModel;
+using IdentityModel.Client;
 using Wcf.Extensions.OpenIdConnect.Client;
 
 namespace Wcf.Extensions.OpenIdConnect.Samples.ConsoleClient
@@ -25,39 +25,34 @@ namespace Wcf.Extensions.OpenIdConnect.Samples.ConsoleClient
             Console.WriteLine(InvokeWithClientCredentials());
 
             Console.WriteLine();
-
-            Console.Write("Resource Owner Ping ");
-            Console.WriteLine(InvokeWithResourceOwnerPassword());
-
-            Console.WriteLine();
             Console.WriteLine("Done.");
             Console.ReadLine();
         }
 
         private static string InvokeWithClientCredentials()
         {
+            // With IdentityModel Token Client
+
+            using (var client = new TokenClient(TokenUri, ClientId, ClientSecret))
+            {
             // Request token
-            var client = new WrappedJwtClient(TokenUri, ClientId, ClientSecret);
-            SecurityToken token = client.RequestClientCredentialsAsync(scope: "write").Result;
-            // Create channel - With helper channel factory
-            var channel = WrappedJwtChannelFactory.Create<IService>(token, ServiceUri);
+                var token = client.RequestClientCredentialsAsync("write").Result;
+                // Create channel
+                var channel = WrappedJwtChannelFactory.Create<IService>(token.AccessToken, ServiceUri);
             // Invoke proxy
             return channel.Ping();
         }
 
-        private static string InvokeWithResourceOwnerPassword()
-        {
+            // With Azure ADAL Token Client
+
             // Request token
-            var client = new WrappedJwtClient(TokenUri, ClientId, ClientSecret);
-            SecurityToken token = client.RequestResourceOwnerPasswordAsync(
-                scope: "write", userName: "johan@johan.local", password: "!QAZ2wsx3edc").Result;
+            //var authContext = new AuthenticationContext(TokenUri);
+            //var creds = new ClientCredential(ClientId, ClientSecret);
+            //var token = authContext.AcquireTokenAsync(ResourceId, creds).Result;
             // Create channel
-            var factory = new ChannelFactory<IService>(
-                BindingFactory.ForWrappedJwt,
-                new EndpointAddress(ServiceUri));
-            var channel = factory.CreateChannelWithIssuedToken(token);
+            //var channel = WrappedJwtChannelFactory.Create<IService>(token.AccessToken, ServiceUri);
             // Invoke proxy
-            return channel.Ping();
+            //return channel.Ping();
         }
     }
 

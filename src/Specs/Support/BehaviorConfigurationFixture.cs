@@ -27,6 +27,7 @@ namespace Wcf.Extensions.OpenIdConnect.Specs.Support
 
         public InternalWrappedJwtAuthorizationServiceBehavior CreateSut(
             string requiredScopes = null,
+            string requiredRoles = null,
             string validAudience = null,
             string validAudienceAppSettingKey = null,
             string metadataAddress = null,
@@ -39,7 +40,8 @@ namespace Wcf.Extensions.OpenIdConnect.Specs.Support
                 validAudienceAppSettingKey,
                 metadataAddress,
                 metadataAddressAppSettingsKey,
-                requiredScopes);
+                requiredScopes,
+                requiredRoles);
         }
 
         private string GetSetting(string key)
