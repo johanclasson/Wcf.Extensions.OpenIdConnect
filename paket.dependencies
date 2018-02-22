@@ -3,6 +3,7 @@ strategy: min
 source https://api.nuget.org/v3/index.json
 framework >= net45
 
+nuget Microsoft.IdentityModel.Clients.ActiveDirectory
 nuget IdentityModel 2.6.0
 nuget System.IdentityModel.Tokens.Jwt 4.0.4.403061554
 nuget xunit

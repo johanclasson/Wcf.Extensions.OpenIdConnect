@@ -18,19 +18,34 @@ Install-Package Wcf.Extensions.OpenIdConnect.Client
 
 ```csharp
 // Request token
-var client = new WrappedJwtClient(
-    clientId: "my-client-id",
-    clientSecret: "my-client-secret",
-    tokenUri: "https://{my-authorization-server}/oauth2/token");
-var token = await client.RequestClientCredentialsAsync();
+string jwt = ...
+// Create channel
+var channel = WrappedJwtChannelFactory.Create<IMyService>(jwt, "https://{some-service}");
 // Invoke service method proxy
-var channel = WrappedJwtChannelFactory.Create<IMyService>(token, "https://{some-service}");
 channel.MyMethod();
 ```
 
-The `WrappedJwtClient` use the standard `IdentityModel.Client.TokenClient` to request JWT tokens, but wraps them in a SAML assertion. For wrapping JWT tokens manually, use the static `SamlUtils.WrapJwt("...")` helper method.
+For example, the JWT can be retrieved with the `TokenClient` of `IdentityModel`:
 
-For requesting a JWT token over Resource Owner Credential Grant, use the `RequestResourceOwnerPasswordAsync(...)` method of the `WrappedJwtClient` instance.
+```csharp
+using (var client = new TokenClient(
+    "https://{my-authorization-server}/oauth2/token", "my-client-id", "my-client-secret"))
+{
+    var token = await client.RequestClientCredentialsAsync("write");
+    string jwt = token.AccessToken;
+    ...
+}
+```
+
+Or retrieved with the `AuthenticationContext` of `Microsoft.IdentityModel.Clients.ActiveDirectory`:
+
+```csharp
+var authContext = new AuthenticationContext("https://{my-authorization-server}/oauth2/token");
+var creds = new ClientCredential("my-client-id", "my-client-secret");
+var token = await authContext.AcquireTokenAsync("my-resource-id", creds);
+string jwt = token.AccessToken;
+...
+```
 
 ## Service Host
 
@@ -44,11 +59,14 @@ Install-Package Wcf.Extensions.OpenIdConnect.Service
 
 Authorization is enforced through the custom service behavior, `WrappedJwtAuthorizationServiceBehavior`.
 
-The behavior requires that all requests contain a wrapped JWT token which passes the validation logic of the standard `System.IdentityModel.Tokens.JwtSecurityTokenHandler`, that is it contains the expected audience and issuer.
+The behavior requires that all requests contain a wrapped JWT token which passes the validation logic of the standard `System.IdentityModel.Tokens.JwtSecurityTokenHandler`. To be more precise the tokens need to be encrypted with the expected certificate, and contain the expected audience and issuer.
 
 The behavior gets the issuer claim and other configuration through an [OpenID Connect discovery endpoint](https://openid.net/specs/openid-connect-discovery-1_0.html), here called metadataAddress to use the same wording as the popular `Microsoft.Owin.Security.OpenIdConnect` package for MVC applications.
 
-Service wide authorization can be configured by setting an expected scope. When using an expected scope, only requests with a `scp` claim containing the expected scope will be authorized. Method authorization is possible by inspecting the claims through `ClaimsPrincipal.Current.Claims`.
+Additional service-wide authorization can be configured by setting expected scopes or/and roles. When using expected scopes and roles, only requests with `scp` and `roles` claims containing the expected values will be authorized. Role and scope authorization is entirely optional and can be left out if desired.
+
+Method authorization is possible by inspecting the claims through `ClaimsPrincipal.Current.Claims`.
+
 
 The discovery endpoint metadata address and expected audience can either be specified in code or as app settings.
 
@@ -69,6 +87,7 @@ There are four alternatives for how to configure authorization.
     <serviceBehaviors>
       <behavior>
         <wrappedJwtAuthorization requiredScopes="write"
+                                 requiredRoles="admin"
                                  validAudience="my-expected-audience"
                                  metadataAddress="https://{my-authorization-server}/.well-known/openid-configuration" />
       </behavior>
@@ -89,7 +108,7 @@ Or to pick up valid audience and metadata address from app settings:
   <behaviors>
     <serviceBehaviors>
       <behavior>
-        <wrappedJwtAuthorization requiredScopes="write" />
+        <wrappedJwtAuthorization requiredScopes="write" requiredRoles="admin" />
       </behavior>
     </serviceBehaviors>
   </behaviors>
@@ -102,8 +121,8 @@ Or to pick up valid audience and metadata address from app settings:
 ServiceHost host = ...
 var config = await OpenIdConnectConfigurationClient.RequestConfigurationAsync(
     "https://{my-authorization-server}/.well-known/openid-configuration");
-host.AddWrappedJwtAuthorization(
-    config, requiredScopes: "write", validAudience: "my-expected-audience");
+host.AddWrappedJwtAuthorization(config,
+    requiredScopes: "write", requiredRoles: "admin", validAudience: "my-expected-audience");
 ```
 
 #### Alternative 3) Add Behavior by Code
@@ -112,6 +131,7 @@ host.AddWrappedJwtAuthorization(
 ServiceHost host = ...
 host.Description.Behaviors.Add(new WrappedJwtAuthorizationServiceBehavior(
     requiredScopes: "write",
+    requiredRoles: "admin",
     validAudience: "my-expected-audience",
     metadataAddress: "https://{my-authorization-server}/.well-known/openid-configuration"));
 ```
@@ -120,7 +140,8 @@ Or to pick up valid audience and metadata address from app settings:
 
 ```csharp
 ServiceHost host = ...
-host.Description.Behaviors.Add(new WrappedJwtAuthorizationServiceBehavior(requiredScopes: "write"));
+host.Description.Behaviors.Add(new WrappedJwtAuthorizationServiceBehavior(
+    requiredScopes: "write", requiredRoles: "admin"));
 ```
 
 #### Alternative 4) Add Behavior by Attribute
@@ -128,6 +149,7 @@ host.Description.Behaviors.Add(new WrappedJwtAuthorizationServiceBehavior(requir
 ```csharp
 [WrappedJwtAuthorizationServiceBehavior(
     requiredScopes: "write",
+    requiredRoles: "admin",
     validAudience: "my-expected-audience",
     metadataAddress: "https://{my-authorization-server}/.well-known/openid-configuration")]
 internal class Service : IService { ... }
@@ -136,13 +158,13 @@ internal class Service : IService { ... }
 Or to pick up valid audience and metadata address from app settings:
 
 ```csharp
-[WrappedJwtAuthorizationServiceBehavior(requiredScopes: "write)]
+[WrappedJwtAuthorizationServiceBehavior(requiredScopes: "write", requiredRoles: "admin")]
 internal class Service : IService { ... }
 ```
 
 ### Required Binding
 
-The wrapped JWT authorization service behavior or extension only works together with the `WS2007FederationHttpBinding`. It can be configured as code:
+The wrapped JWT authorization service behavior or extension only works together with the `WS2007FederationHttpBinding`. For example, it can be configured with code as:
 
 ```csharp
 var binding = new WS2007FederationHttpBinding(
@@ -169,10 +191,10 @@ Or in App.Config or Web.Config:
 
 ### ADFS Compatibility
 
-ADFS uses a non standard value for the `iss` claim in access tokens. [OpenID Connect states](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata) that the issuer should be identical to the `issuer` field which is present in the metadata at the OpenID discovery endpoint. ADFS uses `access_token_issuer` instead.
+ADFS uses a non standard value for the `iss` claim in access tokens. OpenID Connect states [(ref.)](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata) that the issuer should be identical to the `issuer` field which is present in the metadata at the OpenID discovery endpoint. ADFS uses `access_token_issuer` instead.
 
-Where does its value come from? One might guess that the Federation Service property IdTokenIssuer would be used for `access_token_issuer`, but no. It is taken from the Federation Service Identifier which is automatically set during installation.
+The value of `access_token_issuer` is taken from the Federation Service property `Identifier` which is automatically set during installation. _(One might guess that it would be taken from the Federation Service property `IdTokenIssuer`, but this is not the case.)_
 
-The Federation Service Identifier can be changed with the PowerShell command `Set-AdfsProperties -Identifier https://{my-authorization-server}`, but that might not be something that is an option in an existing federation setup because of relying parties and upstream identity providers.
+The Federation Service `Identifier` can be changed with the PowerShell command `Set-AdfsProperties -Identifier https://{my-authorization-server}`, but that might not be something that is an option in an existing federation setup because of relying parties and upstream identity providers.
 
-The wrapped JWT authorization service behavior handles this by using the `access_token_issuer` field if it exists. And if the field does not exist, it falls back to the standard `issuer` field. That way it is compatible with ADFS and also other products, such as Azure AD.
+The wrapped JWT authorization service behavior handles this by using the `access_token_issuer` field if it exists. And if the field does not exist, it falls back to the standard `issuer` field. That way it is compatible with both ADFS and other products, such as Azure AD.

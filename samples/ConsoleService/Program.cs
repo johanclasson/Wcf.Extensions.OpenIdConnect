@@ -16,12 +16,14 @@ namespace Wcf.Extensions.OpenIdConnect.Samples.ConsoleService
             // Init option 1: Call extension method directly
             //var config = OpenIdConnectConfigurationClient.RequestConfigurationAsync(Constants.MetadataAddress).Result;
             //host.AddWrappedJwtAuthorization(config,
+            //    requiredRoles: Constants.RequiredRoles,
             //    requiredScopes: Constants.RequiredScopes,
             //    validAudience: Constants.ValidAudience);
 
             // Init option 2: Add behavior by code
             //host.Description.Behaviors.Add(new WrappedJwtAuthorizationServiceBehavior(
             //    requiredScopes: Constants.RequiredScopes,
+            //    requiredRoles: Constants.RequiredRoles,
             //    validAudience: Constants.ValidAudience,
             //    metadataAddress: Constants.MetadataAddress));
 
@@ -35,14 +37,11 @@ namespace Wcf.Extensions.OpenIdConnect.Samples.ConsoleService
             host.Close();
         }
 
-        // TODO: Use BindingFactory.ForClaims
         private static Binding CreateBinding()
         {
             var binding = new WS2007FederationHttpBinding(WSFederationHttpSecurityMode.TransportWithMessageCredential);
-
             binding.Security.Message.EstablishSecurityContext = false;
             binding.Security.Message.IssuedKeyType = SecurityKeyType.BearerKey;
-
             return binding;
         }
     }

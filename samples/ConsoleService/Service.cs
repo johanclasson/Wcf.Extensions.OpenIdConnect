@@ -15,6 +15,7 @@ namespace Wcf.Extensions.OpenIdConnect.Samples.ConsoleService
     // Init option 3: Add behavior by service attribute
     [WrappedJwtAuthorizationServiceBehavior(
         requiredScopes: Constants.RequiredScopes,
+        requiredRoles: Constants.RequiredRoles,
         validAudience: Constants.ValidAudience,
         metadataAddress: Constants.MetadataAddress)]
     internal class Service : IService

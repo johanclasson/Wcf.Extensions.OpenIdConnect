@@ -15,10 +15,12 @@ namespace Wcf.Extensions.OpenIdConnect.Service
             string validAudienceAppSettingKey = null,
             string metadataAddress = null,
             string metadataAddressAppSettingsKey = null,
-            string requiredScopes = null)
+            string requiredScopes = null,
+            string requiredRoles = null)
         {
             _behavior = new WrappedJwtAuthorizationServiceBehavior(
                 requiredScopes: requiredScopes,
+                requiredRoles: requiredRoles,
                 validAudience: validAudience,
                 validAudienceAppSettingKey: validAudienceAppSettingKey,
                 metadataAddress: metadataAddress,

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Wcf.Extensions.OpenIdConnect.Service
 {
-    internal static class OpenIdConnectConfigurationClient
+    public static class OpenIdConnectConfigurationClient
     {
         public static Task<OpenIdConnectConfiguration> RequestConfigurationAsync(string metadataAddress)
         {
