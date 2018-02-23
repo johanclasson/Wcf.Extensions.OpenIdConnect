@@ -1,2 +1,2 @@
-IdentityModel
 System.IdentityModel.Tokens.Jwt
+Newtonsoft.Json
