@@ -4,7 +4,7 @@ WCF have traditionally relied on Kerberos or WS-Federation for authorization. Th
 
 ## TL;DR
 
-Copy your favorite way of configurating the client and service from one of the provided [samples](./samples/).
+See how configuration can be performed in one of the provided [samples](./samples/).
 
 ## Client
 
@@ -38,7 +38,7 @@ var channel = new ChannelFactory<IMyService>("*").CreateChannelWithIssuedToken(j
 channel.MyMethod();
 ```
 
-#### Request JWT Tokens
+#### Request Access Tokens
 
 For example, the JWT can be retrieved with the `TokenClient` of `IdentityModel`:
 
