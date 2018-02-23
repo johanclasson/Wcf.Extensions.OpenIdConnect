@@ -16,14 +16,29 @@ Install-Package Wcf.Extensions.OpenIdConnect.Client -Prerelease
 
 ### Make Service Call
 
+#### Alternative 1) WrappedJwtChannelFactory
+
 ```csharp
 // Request token
 string jwt = ...
-// Create channel
+// Create channel - No App.Config or Web.Config needed
 var channel = WrappedJwtChannelFactory.Create<IMyService>(jwt, "https://{some-service}");
 // Invoke service method proxy
 channel.MyMethod();
 ```
+
+#### Alternative 2) ChannelFactory<TChannel> Extension Method
+
+```csharp
+// Request token
+string jwt = ...
+// Create channel - Binding and remote address is taken from App.Config or Web.Config
+var channel = new ChannelFactory<IMyService>("*").CreateChannelWithIssuedToken(jwt);
+// Invoke service method proxy
+channel.MyMethod();
+```
+
+#### Request JWT Tokens
 
 For example, the JWT can be retrieved with the `TokenClient` of `IdentityModel`:
 
