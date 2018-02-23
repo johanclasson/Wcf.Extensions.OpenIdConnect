@@ -25,7 +25,7 @@ namespace Wcf.Extensions.OpenIdConnect.Specs
             OpenIdConnectConfiguration result = await _fixture.RequestConfigurationAsync();
             Assert.NotNull(result);
             Assert.Equal(expectedIssuer, result.Issuer);
-            Assert.StartsWith("MIIC3DCCAcSgAwIBAgI", result.Certificate);
+            Assert.Equal(SpecConstants.Certificate, result.Certificate);
         }
     }
 }

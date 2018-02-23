@@ -49,6 +49,7 @@
     <Compile Include="IHttpClient.cs" />
     <Compile Include="InternalConfigurationClient.cs" />
     <Compile Include="InternalWrappedJwtAuthorizationServiceBehavior.cs" />
+    <Compile Include="OpenIdConfigurationMissingFieldException.cs" />
     <Compile Include="OpenIdConnectConfiguration.cs" />
     <Compile Include="OpenIdConnectConfigurationClient.cs" />
     <Compile Include="OpenIdConnectConfigurationException.cs" />

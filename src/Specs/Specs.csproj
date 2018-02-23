@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BadConfigurationSpecs.cs" />
     <Compile Include="BehaviorConfigurationSpecs.cs" />
     <Compile Include="BadTokenHandlerConfigurationSpecs.cs" />
     <Compile Include="ConfigurationSpecs.cs" />
