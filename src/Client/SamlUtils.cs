@@ -4,7 +4,6 @@ using System.IO;
 using System.Security.Claims;
 using System.Xml;
 using System.Xml.Linq;
-using IdentityModel;
 
 namespace Wcf.Extensions.OpenIdConnect.Client
 {
@@ -17,7 +16,7 @@ namespace Wcf.Extensions.OpenIdConnect.Client
 
             var descriptor = new SecurityTokenDescriptor
             {
-                TokenType = OidcConstants.TokenTypes.AccessToken,
+                TokenType = "access_token",
                 TokenIssuerName = "urn:wrappedjwt",
                 Subject = subject
             };
