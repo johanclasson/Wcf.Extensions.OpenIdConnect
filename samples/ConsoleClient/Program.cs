@@ -35,13 +35,13 @@ namespace Wcf.Extensions.OpenIdConnect.Samples.ConsoleClient
 
             using (var client = new TokenClient(TokenUri, ClientId, ClientSecret))
             {
-            // Request token
+                // Request token
                 var token = client.RequestClientCredentialsAsync("write").Result;
                 // Create channel
                 var channel = WrappedJwtChannelFactory.Create<IService>(token.AccessToken, ServiceUri);
-            // Invoke proxy
-            return channel.Ping();
-        }
+                // Invoke proxy
+                return channel.Ping();
+            }
 
             // With Azure ADAL Token Client
 
