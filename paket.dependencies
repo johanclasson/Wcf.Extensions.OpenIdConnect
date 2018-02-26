@@ -1,7 +1,7 @@
 redirects: on
 strategy: min
 source https://api.nuget.org/v3/index.json
-framework >= net45
+framework: net45
 
 nuget Microsoft.IdentityModel.Clients.ActiveDirectory
 nuget IdentityModel 2.6.0

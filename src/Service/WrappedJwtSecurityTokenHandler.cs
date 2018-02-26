@@ -10,8 +10,8 @@ namespace Wcf.Extensions.OpenIdConnect.Service
 {
     internal class WrappedJwtSecurityTokenHandler : Saml2SecurityTokenHandler
     {
-        readonly X509Certificate2 _signingCert;
-        readonly string _issuerName;
+        private readonly X509Certificate2 _signingCert;
+        private readonly string _issuerName;
         private readonly string _validAudience;
         private readonly string[] _requiredScopes;
         private readonly string[] _requiredRoles;
@@ -75,7 +75,7 @@ namespace Wcf.Extensions.OpenIdConnect.Service
                 if (principal.HasClaim(c => IsClaimContainingExpectedValue(c, "scp", scope)))
                     return;
             }
-            throw new SecurityTokenValidationException("Insufficient Scope");
+            throw new SecurityTokenValidationException("Insufficient scope");
         }
 
         private static bool IsClaimContainingExpectedValue(Claim c, string type, string value)
@@ -92,7 +92,7 @@ namespace Wcf.Extensions.OpenIdConnect.Service
                 if (principal.HasClaim(c => IsClaimContainingExpectedValue(c, "roles", role)))
                     return;
             }
-            throw new SecurityTokenValidationException("Insufficient Scope");
+            throw new SecurityTokenValidationException("Insufficient roles");
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Wcf.Extensions.OpenIdConnect.Service;
+﻿using Wcf.Extensions.OpenIdConnect.Service;
 using Wcf.Extensions.OpenIdConnect.Specs.Support;
 using Xunit;
 
