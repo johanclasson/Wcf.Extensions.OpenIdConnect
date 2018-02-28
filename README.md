@@ -1,5 +1,7 @@
 # Wcf.Extensions.OpenIdConnect
 
+<!-- ![Build Status](https://johanclasson.visualstudio.com/_apis/public/build/definitions/888f828d-d1a4-42fb-8b78-2e6420b1b2f8/14/badge) -->
+
 WCF have traditionally relied on Kerberos or WS-Federation for authorization. This project contains packages which bring compatibility with the modern OAuth 2.0/OpenID Connect-world to WCF, and is heavily inspired by [Dominick Baier's blog post](https://leastprivilege.com/2015/07/02/give-your-wcf-security-architecture-a-makeover-with-identityserver3/) about placing the JWT token in a SAML assertion container.
 
 ## TL;DR
@@ -9,6 +11,8 @@ See how configuration can be performed in one of the provided [samples](./sample
 ## Client
 
 ### Install NuGet-packages
+
+![NuGet Status](https://img.shields.io/nuget/v/Wcf.Extensions.OpenIdConnect.Client.svg?style=flat-square)
 
 ```powershell
 Install-Package Wcf.Extensions.OpenIdConnect.Client -Prerelease
@@ -65,6 +69,8 @@ string jwt = token.AccessToken;
 ## Service Host
 
 ### Install NuGet-packages
+
+![NuGet Status](https://img.shields.io/nuget/v/Wcf.Extensions.OpenIdConnect.Service.svg?style=flat-square)
 
 ```powershell
 Install-Package Wcf.Extensions.OpenIdConnect.Service -Prerelease
