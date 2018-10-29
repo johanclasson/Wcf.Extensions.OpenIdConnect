@@ -59,7 +59,7 @@ using (var client = new TokenClient(
 Or retrieved with the `AuthenticationContext` of `Microsoft.IdentityModel.Clients.ActiveDirectory`:
 
 ```csharp
-var authContext = new AuthenticationContext("https://{my-authorization-server}/oauth2/token");
+var authContext = new AuthenticationContext("https://{my-authorization-server}");
 var creds = new ClientCredential("my-client-id", "my-client-secret");
 var token = await authContext.AcquireTokenAsync("my-resource-id", creds);
 string jwt = token.AccessToken;
